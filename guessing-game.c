@@ -169,7 +169,7 @@ void playGame(int minimumValue, int maximumValue)
         if (cheatModeOn)
         {
             printf("\033[34m");
-            printf("\nCheat mode is enabled - the corrent answer is %d.\n", correctAnswer);
+            printf("\nCheat mode is enabled - the correct answer is %d.\n", correctAnswer);
             printf("\033[0m");
         }
 
@@ -195,7 +195,7 @@ void playGame(int minimumValue, int maximumValue)
 
     if (gameWon)
     {
-        printf("\nCongratulations, your're an amazing guesser!\n");
+        printf("\nCongratulations, you're an amazing guesser!\n");
         printf("\nYou won the game after %d attempt(s).\n", playerNumberOfGuesses);
     }
     else
