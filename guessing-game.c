@@ -88,6 +88,8 @@ void displayMostGuesses()
 
     printf("To return to the main menu enter 0: ");
     getch();
+
+    free(mostGuesses);
 }
 
 void displaySettingsMenu(int *minimumValue, int *maximumValue)
