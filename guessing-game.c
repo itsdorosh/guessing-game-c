@@ -13,7 +13,7 @@ void displayUserInput(char *message)
     int messageLength = strlen(message);
 
     printf("──────────────────────────────────────────────────────────────────────\n");
-    printf(message);
+    printf("%s", message);
     printf("──────────────────────────────────────────────────────────────────────\n");
     printf("\033[2A");
     printf("\033[%dC", messageLength);
