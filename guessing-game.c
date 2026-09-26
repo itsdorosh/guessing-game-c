@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "guessing-game.h"
 
 #define CLEAR_SCREEN() printf("\033[H\033[J");
@@ -234,6 +235,8 @@ int main(void)
     int minimumValue = 1, maximumValue = 30;
     int answerHistory[NUM_MOST_GUESSES];
     int answerHistoryCount = 0;
+
+    srand((unsigned int)time(NULL));
 
     displayMainMenu("", true);
 
