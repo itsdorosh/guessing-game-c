@@ -32,7 +32,7 @@ void displayMainMenu(char *message, bool needToClear)
     printf("\t1. Play\n");
     printf("\t2. Settings\n");
     printf("\t3. Most Guesses\n");
-    printf("\t4. Exit\n");
+    printf("\t4. Exit\n\n");
 
     if (message != NULL && strcmp(message, "") != 0)
     {
@@ -69,38 +69,44 @@ int obtainNumericUserInput()
     return selection;
 }
 
-int *getMostGuessesList(int numberOfGuesses)
+void recordGameAnswer(int *answerHistory, int *answerHistoryCount, int answer)
 {
-    int *guesses = (int *)malloc(numberOfGuesses * sizeof(int));
-    int minimumNumber = 2, maximumNumber = 35;
+    int entriesToShift = (*answerHistoryCount < NUM_MOST_GUESSES) ? *answerHistoryCount : NUM_MOST_GUESSES - 1;
 
-    for (int i = 0; i < numberOfGuesses; i++)
+    for (int i = entriesToShift; i > 0; i--)
     {
-        guesses[i] = generateRandomNumber(minimumNumber, maximumNumber);
+        answerHistory[i] = answerHistory[i - 1];
     }
 
-    return guesses;
+    answerHistory[0] = answer;
+
+    if (*answerHistoryCount < NUM_MOST_GUESSES)
+    {
+        (*answerHistoryCount)++;
+    }
 }
 
-void displayMostGuesses()
+void displayMostGuesses(int *answerHistory, int answerHistoryCount)
 {
+    printf("Most Guesses Table (most recent game's answer first)\n\n");
 
-    printf("Most Guesses Table\n");
-
-    int *mostGuesses = getMostGuessesList(NUM_MOST_GUESSES);
-
-    for (int i = NUM_MOST_GUESSES - 1; i >= 0; i--)
+    if (answerHistoryCount == 0)
     {
-        printf("%d. %d\n", i + 1, mostGuesses[i]);
+        printf("No games have been played yet.\n");
     }
-
-    free(mostGuesses);
+    else
+    {
+        for (int i = 0; i < answerHistoryCount; i++)
+        {
+            printf("%d. %d\n", i + 1, answerHistory[i]);
+        }
+    }
 
     int selection;
 
     do
     {
-        printf("To return to the main menu enter 0: ");
+        printf("\nTo return to the main menu enter 0: ");
         selection = obtainNumericUserInput();
     } while (selection != 0);
 }
@@ -169,7 +175,7 @@ int generateRandomNumber(int minimumNumber, int maximumNumber)
     return rand() % (maximumNumber - minimumNumber + 1) + minimumNumber;
 }
 
-void playGame(int minimumValue, int maximumValue, bool cheatModeOn)
+void playGame(int minimumValue, int maximumValue, bool cheatModeOn, int *answerHistory, int *answerHistoryCount)
 {
     int maximumNumberOfGuessesAllowed = 3;
     int playerNumberOfGuesses = 0;
@@ -177,6 +183,8 @@ void playGame(int minimumValue, int maximumValue, bool cheatModeOn)
     int closeGuessRange = 5;
     int gameWon = 0;
     int correctAnswer = generateRandomNumber(minimumValue, maximumValue);
+
+    recordGameAnswer(answerHistory, answerHistoryCount, correctAnswer);
 
     for (int i = 0; i < maximumNumberOfGuessesAllowed; i++)
     {
@@ -224,6 +232,8 @@ int main(void)
     bool exitFlag = false;
     bool cheatModeEnabled = false;
     int minimumValue = 1, maximumValue = 30;
+    int answerHistory[NUM_MOST_GUESSES];
+    int answerHistoryCount = 0;
 
     displayMainMenu("", true);
 
@@ -236,7 +246,7 @@ int main(void)
             displayMainMenu("", true);
             break;
         case 1:
-            playGame(minimumValue, maximumValue, cheatModeEnabled);
+            playGame(minimumValue, maximumValue, cheatModeEnabled, answerHistory, &answerHistoryCount);
             break;
         case 2:
             displaySettingsMenu(&minimumValue, &maximumValue);
@@ -244,7 +254,7 @@ int main(void)
 
         case 3:
             CLEAR_SCREEN();
-            displayMostGuesses();
+            displayMostGuesses(answerHistory, answerHistoryCount);
             displayMainMenu("", true);
             break;
         case 4:

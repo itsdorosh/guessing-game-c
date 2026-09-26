@@ -5,8 +5,8 @@
 void displayUserInput(char *message);
 void displayMainMenu(char *message, bool needToClear);
 int obtainNumericUserInput();
-int *getMostGuessesList(int numberOfGuesses);
-void displayMostGuesses();
+void recordGameAnswer(int *answerHistory, int *answerHistoryCount, int answer);
+void displayMostGuesses(int *answerHistory, int answerHistoryCount);
 void displaySettingsMenu(int *minimumValue, int *maximumValue);
 int generateRandomNumber(int minimumNumber, int maximumNumber);
-void playGame(int minimumValue, int maximumValue, bool cheatModeOn);
+void playGame(int minimumValue, int maximumValue, bool cheatModeOn, int *answerHistory, int *answerHistoryCount);
