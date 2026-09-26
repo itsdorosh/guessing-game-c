@@ -160,9 +160,8 @@ int generateRandomNumber(int minimumNumber, int maximumNumber)
     return rand() % (maximumNumber - minimumNumber + 1) + minimumNumber;
 }
 
-void playGame(int minimumValue, int maximumValue)
+void playGame(int minimumValue, int maximumValue, bool cheatModeOn)
 {
-    int cheatModeOn = 0;
     int maximumNumberOfGuessesAllowed = 3;
     int playerNumberOfGuesses = 0;
     int currentPlayerAnswer = 0;
@@ -214,6 +213,7 @@ int main(void)
 {
     int selection;
     bool exitFlag = false;
+    bool cheatModeEnabled = false;
     int minimumValue = 1, maximumValue = 30;
 
     displayMainMenu("", true);
@@ -227,7 +227,7 @@ int main(void)
             displayMainMenu("", true);
             break;
         case 1:
-            playGame(minimumValue, maximumValue);
+            playGame(minimumValue, maximumValue, cheatModeEnabled);
             break;
         case 2:
             displaySettingsMenu(&minimumValue, &maximumValue);
@@ -242,6 +242,10 @@ int main(void)
             exitFlag = true;
             CLEAR_SCREEN();
             printf("You can come back anytime! Good luck!\n");
+            break;
+        case 999:
+            cheatModeEnabled = !cheatModeEnabled;
+            displayMainMenu(cheatModeEnabled ? "Cheat mode enabled.\n" : "Cheat mode disabled.\n", true);
             break;
         default:
             displayMainMenu("Hm... I guess that you need ... to enter correct menu option!\n", true);

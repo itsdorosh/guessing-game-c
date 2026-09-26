@@ -9,4 +9,4 @@ int *getMostGuessesList(int numberOfGuesses);
 void displayMostGuesses();
 void displaySettingsMenu(int *minimumValue, int *maximumValue);
 int generateRandomNumber(int minimumNumber, int maximumNumber);
-void playGame(int minimumValue, int maximumValue);
+void playGame(int minimumValue, int maximumValue, bool cheatModeOn);
