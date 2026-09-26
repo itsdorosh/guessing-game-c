@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ncurses.h>
 #include "guessing-game.h"
 
 #define CLEAR_SCREEN() printf("\033[H\033[J");
@@ -86,10 +85,15 @@ void displayMostGuesses()
         printf("%d. %d\n", i + 1, mostGuesses[i]);
     }
 
-    printf("To return to the main menu enter 0: ");
-    getch();
-
     free(mostGuesses);
+
+    int selection;
+
+    do
+    {
+        printf("To return to the main menu enter 0: ");
+        selection = obtainNumericUserInput();
+    } while (selection != 0);
 }
 
 void displaySettingsMenu(int *minimumValue, int *maximumValue)
@@ -232,6 +236,7 @@ int main(void)
         case 3:
             CLEAR_SCREEN();
             displayMostGuesses();
+            displayMainMenu("", true);
             break;
         case 4:
             exitFlag = true;
