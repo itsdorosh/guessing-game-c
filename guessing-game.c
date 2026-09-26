@@ -57,6 +57,15 @@ int obtainNumericUserInput()
         inputStatus = scanf("%d", &selection);
     } while (inputStatus != 1 && (tempValue = getchar()) != EOF && tempValue != '\n');
 
+    if (inputStatus != 1)
+    {
+        printf("\nGoodbye!\n");
+        exit(0);
+    }
+
+    while ((tempValue = getchar()) != '\n' && tempValue != EOF)
+        ;
+
     return selection;
 }
 
